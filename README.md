@@ -68,3 +68,11 @@ Se usa para manejar rutas dinámicas en la API, permitiendo utilizar parámetros
 Permite configurar CORS para que la API pueda ser accedida desde diferentes orígenes
 
 
+## Resultado imagenes:
+![WhatsApp Image 2025-03-27 at 9 18 10 PM](https://github.com/user-attachments/assets/17dcdd89-af9c-4b85-8ac2-f6b77d9c34ff)
+
+
+
+
+
+
