@@ -69,7 +69,27 @@ Permite configurar CORS para que la API pueda ser accedida desde diferentes orí
 
 
 ## Resultado imagenes:
+Listar los partidos:
+
 ![WhatsApp Image 2025-03-27 at 9 18 10 PM](https://github.com/user-attachments/assets/17dcdd89-af9c-4b85-8ac2-f6b77d9c34ff)
+
+Crear nuevo partido:
+![WhatsApp Image 2025-03-27 at 9 19 13 PM](https://github.com/user-attachments/assets/3412564c-58a3-4605-9702-074a906f98d5)
+
+![WhatsApp Image 2025-03-27 at 9 19 33 PM](https://github.com/user-attachments/assets/e39f9efa-f18e-4982-a414-40c4c3d19591)
+
+Actualizar partido: 
+![WhatsApp Image 2025-03-27 at 9 20 23 PM](https://github.com/user-attachments/assets/6a8b50a3-5456-4129-b4e9-d09ac15fac48)
+
+![WhatsApp Image 2025-03-27 at 9 20 39 PM](https://github.com/user-attachments/assets/5e360f7c-90f5-4fbd-84c8-c5cc6626b66f)
+
+Buscar partidos:
+![WhatsApp Image 2025-03-27 at 9 20 54 PM](https://github.com/user-attachments/assets/9407386c-3ddf-4510-bfe5-4d2eec7ed1c4)
+
+Borrar partidos:
+![WhatsApp Image 2025-03-27 at 9 21 26 PM](https://github.com/user-attachments/assets/87f3befa-ec6d-4df6-83b9-be0ef4cf4652)
+
+
 
 
 
