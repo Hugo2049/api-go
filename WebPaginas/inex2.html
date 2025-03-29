@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <script type="application/javascript">
+        // variables globales
+        const API_URL = 'https://chat.nrywhite.lat/chats';
+        let username = '';
+        let lastMessageId = 0;
+
+        // inicializar el chat
+        function initChat() {
+            // crear contenedor del chat
+            const chatContainer = document.createElement('div');
+            chatContainer.style.fontFamily = 'Arial, sans-serif';
+            chatContainer.style.height = '80vh';
+            chatContainer.style.overflowY = 'auto';
+            chatContainer.style.padding = '10px';
+            chatContainer.style.display = 'flex';
+            chatContainer.style.flexDirection = 'column';
+            chatContainer.id = 'chat-container';
+            document.body.appendChild(chatContainer);
+
+            // crear campo de entrada para el nombre de usuario
+            const usernameInput = document.createElement('input');
+            usernameInput.id = 'username-input';
+            usernameInput.placeholder = 'Nombre de usuario';
+            usernameInput.maxLength = 50;
+            usernameInput.style.width = '150px';
+            usernameInput.style.padding = '5px';
+            usernameInput.style.marginRight = '10px';
+            usernameInput.style.border = '1px solid #ddd';
+            usernameInput.style.borderRadius = '4px';
+            document.body.appendChild(usernameInput);
+
+            // crear campo de entrada para el mensaje
+            const messageInput = document.createElement('textarea');
+            messageInput.id = 'message-input';
+            messageInput.placeholder = 'Escribe tu mensaje... (solo 140 caracteres)';
+            messageInput.maxLength = 140;
+            messageInput.style.width = '1100px';  
+            messageInput.style.height = '100px'; 
+            messageInput.style.resize = 'none';  
+            messageInput.style.padding = '10px';
+            messageInput.style.marginRight = '10px';
+            messageInput.style.border = '1px solid #ddd';
+            messageInput.style.borderRadius = '4px';
+            document.body.appendChild(messageInput);
+
+            // crear botón de envío
+            const sendButton = document.createElement('button');
+            sendButton.id = 'send-button';
+            sendButton.textContent = 'Enviar';
+            sendButton.style.padding = '10px 15px';
+            sendButton.style.backgroundColor = '#4CAF50';
+            sendButton.style.color = 'white';
+            sendButton.style.border = 'none';
+            sendButton.style.borderRadius = '4px';
+            sendButton.style.cursor = 'pointer';
+            document.body.appendChild(sendButton);
+
+            // enviar mensaje al hacer clic en el botón
+            sendButton.addEventListener('click', sendMessage);
+
+            // enviar mensaje al presionar enter
+            messageInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            // obtener mensajes inicialmente y periódicamente
+            fetchMessages();
+            setInterval(fetchMessages, 5000);
+        }
+
+        // enviar un mensaje al servidor
+        function sendMessage() {
+            const usernameInput = document.getElementById('username-input');
+            const messageInput = document.getElementById('message-input');
+            
+            // validar nombre de usuario
+            username = usernameInput.value.trim();
+            const message = messageInput.value.trim();
+
+            if (!username) {
+                alert('Por favor, ingresa un nombre de usuario');
+                return;
+            }
+
+            if (message) {
+                fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        message: message
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        messageInput.value = '';
+                        fetchMessages();
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        }
+
+        // obtener mensajes del servidor
+        function fetchMessages() {
+            fetch(API_URL)
+                .then(response => response.json())
+                .then(messages => {
+                    const chatContainer = document.getElementById('chat-container');
+                    const shouldScrollToBottom = isScrollAtBottom(chatContainer);
+
+                    // actualizar solo si hay nuevos mensajes
+                    const newMessages = messages.filter(msg => msg.id > lastMessageId);
+                    
+                    newMessages.forEach(msg => {
+                        const messageElement = document.createElement('div');
+                        messageElement.style.marginBottom = '10px';
+                        messageElement.style.padding = '8px';
+                        messageElement.style.borderRadius = '4px';
+                        messageElement.style.maxWidth = '80%';
+                        messageElement.style.backgroundColor = msg.username === username ? '#dcf8c6' : '#f1f0f0';
+                        messageElement.style.alignSelf = msg.username === username ? 'flex-end' : 'flex-start';
+                        messageElement.textContent = `${msg.username}: ${msg.message}`;
+                        chatContainer.appendChild(messageElement);
+                    });
+
+                    if (newMessages.length > 0) {
+                        lastMessageId = Math.max(...messages.map(m => m.id));
+                        
+                        // mantener la posición de desplazamiento si ya está en la parte inferior
+                        if (shouldScrollToBottom) {
+                            chatContainer.scrollTop = chatContainer.scrollHeight;
+                        }
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // verificar si el desplazamiento está en la parte inferior
+        function isScrollAtBottom(element) {
+            return element.scrollHeight - element.scrollTop === element.clientHeight;
+        }
+
+        // inicializar el chat cuando se cargue la página
+        window.addEventListener('load', initChat);
+    </script>
+  </body>
+</html>

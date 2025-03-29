@@ -1,0 +1,15 @@
+{
+  "matches": {
+    "1": {
+      "id": 1,
+      "homeTeam": "Atletico",
+      "awayTeam": "Cevilla",
+      "matchDate": "0255-02-02",
+      "homeGoals": 1,
+      "yellowCards": 1,
+      "redCards": 1,
+      "extraTime": true
+    }
+  },
+  "nextID": 2
+}
