@@ -67,6 +67,33 @@ Se usa para manejar rutas dinámicas en la API, permitiendo utilizar parámetros
 ### `github.com/rs/cors`
 Permite configurar CORS para que la API pueda ser accedida desde diferentes orígenes
 
+## Implementación del Almacenamiento JSON
+
+Los datos se guardan en el archivo matches.json
+Cada modificación se sincroniza automáticamente con el archivo
+Al iniciar el servicio, los datos se cargan desde el archivo
+
+## Operaciones PATCH para Registro de Eventos
+## Registrar Gol (PATCH /api/matches/{id}/goals)
+
+Incrementa el contador de goles del equipo local.
+Si el partido no existe, devuelve un error 404.
+
+## Registrar Tarjeta Amarilla (PATCH /api/matches/{id}/yellowcards)
+
+Incrementa el contador de tarjetas amarillas del partido.
+Si el partido no existe, devuelve un error 404.
+
+## Registrar Tarjeta Roja (PATCH /api/matches/{id}/redcards)
+
+Incrementa el contador de tarjetas rojas del partido.
+Si el partido no existe, devuelve un error 404.
+
+## Establecer Tiempo Extra (PATCH /api/matches/{id}/extratime)
+
+Establece la bandera de tiempo extra a true para el partido.
+Si el partido no existe, devuelve un error 404.
+
 
 ## Resultado imagenes:
 Listar los partidos:
