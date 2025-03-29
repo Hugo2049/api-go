@@ -1,0 +1,121 @@
+# Guía de Uso - API de La Liga Tracker
+
+Esta guía describe las funcionalidades de la API de La Liga Tracker, una aplicación para gestionar partidos de fútbol, incluyendo registro de goles, tarjetas y tiempo extra.
+
+## Información General
+
+- **URL Base**: http://localhost:8080/api
+- **Formato de Intercambio**: JSON
+
+## Funcionalidades Principales
+
+### 1. Gestión de Partidos
+
+#### 1.1 Obtener todos los partidos
+- **Endpoint**: GET `/matches`
+- **Descripción**: Recupera la lista completa de todos los partidos registrados.
+- **Uso en Frontend**: Haz clic en el botón "Cargar Partidos" en la sección "Listado de Partidos".
+
+#### 1.2 Crear un nuevo partido
+- **Endpoint**: POST `/matches`
+- **Descripción**: Registra un nuevo partido en el sistema.
+- **Parámetros**:
+  - `homeTeam` (string): Nombre del equipo local
+  - `awayTeam` (string): Nombre del equipo visitante
+  - `matchDate` (string): Fecha del partido
+- **Uso en Frontend**: Completa el formulario en la sección "Crear Nuevo Partido" y haz clic en "Crear Partido".
+
+#### 1.3 Buscar partido por ID
+- **Endpoint**: GET `/matches/{id}`
+- **Descripción**: Recupera información detallada de un partido específico.
+- **Parámetros**:
+  - `id` (integer): Identificador único del partido
+- **Uso en Frontend**: Ingresa el ID del partido en la sección "Buscar Partido por ID" y haz clic en "Buscar Partido".
+
+#### 1.4 Actualizar partido
+- **Endpoint**: PUT `/matches/{id}`
+- **Descripción**: Modifica la información de un partido existente.
+- **Parámetros**:
+  - `id` (integer): Identificador único del partido
+  - `homeTeam` (string): Nombre del equipo local
+  - `awayTeam` (string): Nombre del equipo visitante
+  - `matchDate` (string): Fecha del partido
+- **Uso en Frontend**: 
+  - Opción 1: Completa el formulario en la sección "Actualizar Partido" y haz clic en "Actualizar Partido".
+  - Opción 2: En el listado de partidos, haz clic en "Actualizar Partido" junto al partido deseado para pre-llenar el formulario.
+
+#### 1.5 Eliminar partido
+- **Endpoint**: DELETE `/matches/{id}`
+- **Descripción**: Elimina un partido del sistema.
+- **Parámetros**:
+  - `id` (integer): Identificador único del partido
+- **Uso en Frontend**: 
+  - Opción 1: Ingresa el ID del partido en la sección "Eliminar Partido" y haz clic en "Eliminar Partido".
+  - Opción 2: En el listado de partidos, haz clic en "Eliminar Partido" junto al partido deseado.
+
+### 2. Operaciones Adicionales
+
+Estas operaciones se acceden desde la sección "Operaciones Adicionales (PATCH)" del frontend, donde primero debes especificar el ID del partido y luego seleccionar la operación deseada.
+
+#### 2.1 Registrar gol
+- **Endpoint**: PATCH `/matches/{id}/goals`
+- **Descripción**: Incrementa el contador de goles para el equipo local.
+- **Parámetros**:
+  - `id` (integer): Identificador único del partido
+- **Uso en Frontend**: Ingresa el ID del partido y haz clic en "Registrar Gol".
+
+#### 2.2 Registrar tarjeta amarilla
+- **Endpoint**: PATCH `/matches/{id}/yellowcards`
+- **Descripción**: Incrementa el contador de tarjetas amarillas del partido.
+- **Parámetros**:
+  - `id` (integer): Identificador único del partido
+- **Uso en Frontend**: Ingresa el ID del partido y haz clic en "Registrar Tarjeta Amarilla".
+
+#### 2.3 Registrar tarjeta roja
+- **Endpoint**: PATCH `/matches/{id}/redcards`
+- **Descripción**: Incrementa el contador de tarjetas rojas del partido.
+- **Parámetros**:
+  - `id` (integer): Identificador único del partido
+- **Uso en Frontend**: Ingresa el ID del partido y haz clic en "Registrar Tarjeta Roja".
+
+#### 2.4 Establecer tiempo extra
+- **Endpoint**: PATCH `/matches/{id}/extratime`
+- **Descripción**: Marca el partido como que tiene tiempo extra.
+- **Parámetros**:
+  - `id` (integer): Identificador único del partido
+- **Uso en Frontend**: Ingresa el ID del partido y haz clic en "Establecer Tiempo Extra".
+
+## Estructura de Datos
+
+### Objeto Match (Partido)
+
+```json
+{
+  "id": 1,
+  "homeTeam": "Barcelona",
+  "awayTeam": "Real Madrid",
+  "matchDate": "2025-04-01T20:00:00Z",
+  "homeGoals": 2,
+  "awayGoals": 1,
+  "yellowCards": 3,
+  "redCards": 0,
+  "extraTime": false
+}
+```
+
+- `id`: Identificador único (generado automáticamente por el sistema)
+- `homeTeam`: Nombre del equipo local
+- `awayTeam`: Nombre del equipo visitante
+- `matchDate`: Fecha y hora del partido
+- `homeGoals`: Número de goles marcados por el equipo local
+- `awayGoals`: Número de goles marcados por el equipo visitante
+- `yellowCards`: Número de tarjetas amarillas en el partido
+- `redCards`: Número de tarjetas rojas en el partido
+- `extraTime`: Indica si el partido tiene tiempo extra
+
+## Notas Adicionales
+
+1. Todos los datos se almacenan en un archivo JSON local (`matches.json`) en el servidor.
+2. Al usar las operaciones PATCH, el sistema incrementa automáticamente los contadores correspondientes.
+3. La API implementa CORS para permitir peticiones desde cualquier origen.
+4. En caso de error, la API devuelve códigos HTTP apropiados con mensajes descriptivos.
